@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "dawg.h"
+#include "args.h"
 
 /** 
      fills in the ascii table with indexes for each letter of the alphabet used
@@ -186,7 +187,7 @@ void print_state ( struct TState * state, int alpha_size )
  {
    int                          i;
 
-   printf ( "%5d:", state -> id );
+   printf ( " %5d:", state -> id );
    for ( i = 0; i < alpha_size; ++ i )
     {
       if ( state -> edges[i] ) printf ( " %c(%d)", inv_ascii[i], state -> edges[i] -> to -> id );
@@ -248,6 +249,8 @@ void print_dawg ( struct TState * state, int alpha_size )
 
    root = bfs_enqueue_states ( state, alpha_size );
 
+   printf ( "States:\n" );
+
    while ( root )
     {
       Tmp = root;
@@ -283,17 +286,42 @@ void dawg_dealloc ( struct TState * state, int alpha_size )
     }
  }
 
+void usage ( void )
+ {
+   printf ( "Usage: gapmis <options>\n" );
+   printf ( "Standard (Mandatory):\n" );
+   printf ( "  -t, --text               <str>           Input text string.\n" );
+   printf ( "Optional:\n" );
+   printf ( "  -i, --index                              Index the text string, i.e. the nodes of\n"
+            "                                           the states of the resulting DAWG will contain\n"
+            "                                           the ending positions at which the string resulting\n"
+            "                                           by following the path leading to that state\n"
+            "                                           occurs in the input text string\n\n" );
+ }
+
 int main ( int argc, char * argv [] )
  {
    struct TState              * root;
    int                          alpha_size;
+   int                          i;
+   struct TArgs                 args;
+
+   i = decode_switches ( argc, argv, &args );
+
+   if ( i != 3 )
+    {
+      usage ();
+      return ( EXIT_FAILURE );
+    }
    
    //root = create_dawg ( "abbaba", &alpha_size );
-   root = create_dawg ( "aaaaaaaaaaaaa", &alpha_size );
+   printf ( "Input text: %s\n", args . text );
+   printf ( "Input text size: %d\n", strlen ( args . text ) ); 
+   root = create_dawg ( args . text, &alpha_size );
    print_dawg ( root, alpha_size );
 
    dawg_dealloc ( root, alpha_size );
 
-   return ( 0 );
+   return ( EXIT_SUCCESS );
  }
 

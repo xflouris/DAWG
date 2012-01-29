@@ -10,6 +10,7 @@ struct TEdge
    struct TState              * from;
    struct TState              * to;
    int                          type;
+   struct TIntList            * data;
  };
 
 struct TState
@@ -17,6 +18,12 @@ struct TState
    struct TEdge              ** edges;
    struct TState              * suf_link;
    int                          id;
+ };
+
+struct TIntList
+ {
+   int                          x;
+   struct TIntList            * Next; 
  };
 
 struct TStateList
