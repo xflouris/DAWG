@@ -70,12 +70,7 @@ struct TState * create_state ( struct TEdge ** edges, int alpha_size )
        {
          if ( edges[i] )
           {
-            state -> edges[i] = ( struct TEdge * ) malloc ( sizeof ( struct TEdge ) );
-
-            state -> edges[i] -> from = edges[i] -> from;
-            state -> edges[i] -> to   = edges[i] -> to;
-            state -> edges[i] -> type = edges[i] -> type;
-
+            create_edge ( state, edges[i] -> to, edges[i] -> type, inv_ascii[i] );
           }
        }
     }
