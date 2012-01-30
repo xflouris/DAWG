@@ -54,7 +54,7 @@ void create_edge ( struct TState * from, struct TState * to, int type, int a )
 /**
      create a new state and make a deep copy of the provided edges (transitions).
 **/
-struct TState * create_state ( struct TEdge ** edges, int alpha_size )
+struct TState * create_state ( struct TEdge ** edges, int alpha_size, int index )
  {
    struct TState              * state;
    static int                   id = 0;
@@ -288,7 +288,7 @@ void dawg_dealloc ( struct TState * state, int alpha_size )
 
 void usage ( void )
  {
-   printf ( "Usage: gapmis <options>\n" );
+   printf ( "Usage: dawg <options>\n" );
    printf ( "Standard (Mandatory):\n" );
    printf ( "  -t, --text               <str>           Input text string.\n" );
    printf ( "Optional:\n" );
