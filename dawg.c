@@ -54,7 +54,7 @@ void create_edge ( struct TState * from, struct TState * to, int type, int a )
 /**
      create a new state and make a deep copy of the provided edges (transitions).
 **/
-struct TState * create_state ( struct TEdge ** edges, int alpha_size, int index )
+struct TState * create_state ( struct TEdge ** edges, int alpha_size )
  {
    struct TState              * state;
    static int                   id = 0;
