@@ -10,7 +10,6 @@ struct TEdge
    struct TState              * from;
    struct TState              * to;
    int                          type;
-   struct TIntList            * data;
  };
 
 struct TState
@@ -18,6 +17,8 @@ struct TState
    struct TEdge              ** edges;
    struct TState              * suf_link;
    int                          id;
+   struct TIntList            * data;
+   int                          index;
  };
 
 struct TIntList
@@ -37,4 +38,6 @@ int inv_ascii[ASCII_SIZE];
 int dawg_states;
 
 int read_alphabet ( const char * );
+void create_edge ( struct TState *, struct TState *, int, int);
+struct TState * create_state ( struct TEdge **, int, int );
 #endif
