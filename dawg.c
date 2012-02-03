@@ -356,6 +356,7 @@ void dawg_dealloc ( struct TState * state, int alpha_size )
  {
    struct TStateList          * root;
    struct TStateList          * Tmp;
+   struct TIntList            * elm;
    int                          i;
 
    root = bfs_enqueue_states ( state, alpha_size );
@@ -369,6 +370,13 @@ void dawg_dealloc ( struct TState * state, int alpha_size )
          if ( Tmp -> state -> edges[i] ) free ( Tmp -> state -> edges[i] );
        }
       free ( Tmp -> state -> edges );
+      
+      while ( Tmp -> state -> data )
+       {
+         elm = Tmp -> state -> data;
+         Tmp -> state -> data = Tmp -> state -> data -> Next;
+         free ( elm );
+       }
       free ( Tmp -> state );
       free ( Tmp );
     }
